@@ -1,2 +1,0 @@
-1 shortcut "ctrl C" of "ctrl shift c" geeft toegang tot de special copy
-2 shortcut "ctrl V" of "ctrl shift v" geeft toegang to special paste
