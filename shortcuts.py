@@ -1,12 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env -S pipenv run python
 
+import os
+os.environ['DISPLAY'] = ':0'
 from pynput import keyboard
-import subprocess
 from pynput.keyboard import Key, Controller
 import clipboard
 from trello import TrelloClient
 from datetime import datetime, timedelta
 import pytz
+
 
 utc=pytz.UTC
 

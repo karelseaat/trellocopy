@@ -4,10 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-trello = "*"
-py-trello = "*"
 pynput = "*"
 clipboard = "*"
+py-trello = "*"
 
 [dev-packages]
 
