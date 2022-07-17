@@ -1,6 +1,6 @@
 
 
-API_KEY = 'trello api key'
-API_SECRET = 'trello api secret'
-BOARD_ID = 'the id of the board you list resides in'
-LIST_ID = 'the id of the list you want to use for the copy paste'
+API_KEY = '3cd117a524913b8e457893f9fff7b327'
+API_SECRET = '4fa723f0134f1e2970eae1db9aa1c6b9764c0ccab5a9992906cfa2d64d791da2'
+BOARD_ID = '62c57908ee94d77ab6f39383'
+LIST_ID = '62c579171436d928d98792ea'
