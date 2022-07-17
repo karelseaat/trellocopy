@@ -15,15 +15,16 @@ utc=pytz.UTC
 
 pressed = set()
 
-client = TrelloClient(
-    api_key=API_KEY,
-    api_secret=API_SECRET,
-)
-
-copyboard = client.get_board(BOARD_ID)
-aatlist = copyboard.get_list(LIST_ID)
 
 AFTER_KEYS = ""
+
+def get_mylist():
+    client = TrelloClient(
+        api_key=API_KEY,
+        api_secret=API_SECRET,
+    )
+    copyboard = client.get_board(BOARD_ID)
+    return copyboard.get_list(LIST_ID)
 
 def on_press(key):
     """on key pressed add key to pressed key list"""
@@ -44,21 +45,17 @@ def capturekeys():
     with keyboard.Listener(suppress=True,on_press=on_press,on_release=on_release) as listener:
         listener.join()
 
-def do_copy_existing():
-    """copy paste buffer to trello"""
-    global AFTER_KEYS
-    text = clipboard.paste()
-    capturekeys()
-
-    aatlist.add_card(name = AFTER_KEYS, desc = text)
-    AFTER_KEYS = ""
 
 
 def do_copy():
     """copy selected in copy buffer and put it on trello, after restore buffer"""
     global AFTER_KEYS
+    AFTER_KEYS = ""
+
+    mylist = get_mylist()
 
     backupclipb = clipboard.paste()
+    clipboard.copy('')
 
     keyboardcontroller = Controller()
     keyboardcontroller.press(keyboard.Key.ctrl)
@@ -71,8 +68,8 @@ def do_copy():
 
     capturekeys()
 
-    aatlist.add_card(name = AFTER_KEYS, desc = text)
-    AFTER_KEYS = ""
+    mylist.add_card(name = AFTER_KEYS, desc = text)
+
     clipboard.copy(backupclipb)
 
 
@@ -82,9 +79,13 @@ def do_paste():
 
     thecard = None
     capturekeys()
-    for card in aatlist.list_cards():
-        newdate = utc.localize(datetime.now() + timedelta(days = 5))
-        if card.created_date > newdate:
+
+    mylist = get_mylist()
+
+    for card in mylist.list_cards():
+        newdate = utc.localize(datetime.now() - timedelta(minutes = 5))
+
+        if card.created_date < newdate:
             card.delete()
 
         if card.name == AFTER_KEYS:
@@ -100,12 +101,12 @@ def do_paste():
         keyboardcontroller.release("v")
 
         clipboard.copy(backupclipb)
-        AFTER_KEYS = ""
+
+    AFTER_KEYS = ""
 
 
 with keyboard.GlobalHotKeys({
         '<ctrl>+<alt>+c': do_copy,
         '<ctrl>+<alt>+v': do_paste,
-        '<ctrl>+<alt>+x': do_copy_existing,
         }) as h:
     h.join()
