@@ -7,7 +7,7 @@ from pynput.keyboard import  Controller
 import clipboard
 from trello import TrelloClient
 import pytz
-from shortcuts import API_KEY, API_SECRET, BOARD_ID, LIST_ID
+from secrets import API_KEY, API_SECRET, BOARD_ID, LIST_ID
 
 
 os.environ['DISPLAY'] = ':0'
