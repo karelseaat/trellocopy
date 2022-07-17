@@ -1,40 +1,43 @@
 #!/usr/bin/env -S pipenv run python
 
 import os
-os.environ['DISPLAY'] = ':0'
+from datetime import datetime, timedelta
 from pynput import keyboard
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import  Controller
 import clipboard
 from trello import TrelloClient
-from datetime import datetime, timedelta
 import pytz
+from shortcuts import API_KEY, API_SECRET, BOARD_ID, LIST_ID
 
 
+os.environ['DISPLAY'] = ':0'
 utc=pytz.UTC
 
 pressed = set()
 
 client = TrelloClient(
-    api_key='3cd117a524913b8e457893f9fff7b327',
-    api_secret='4fa723f0134f1e2970eae1db9aa1c6b9764c0ccab5a9992906cfa2d64d791da2',
+    api_key=API_KEY,
+    api_secret=API_SECRET,
 )
 
-copyboard = client.get_board('62c57908ee94d77ab6f39383')
-aatlist = copyboard.get_list('62c579171436d928d98792ea')
+copyboard = client.get_board(BOARD_ID)
+aatlist = copyboard.get_list(LIST_ID)
 
-afterkeys = ""
+AFTER_KEYS = ""
 
 def on_press(key):
-    global afterkeys
+    """on key pressed add key to pressed key list"""
+    global AFTER_KEYS
     if key != keyboard.Key.enter:
-        afterkeys += key.char
+        AFTER_KEYS += key.char
 
 def on_release(key):
-    global afterkeys
+    """on key release return true else return false"""
 
     if key == keyboard.Key.enter:
-
         return False
+
+    return True
 
 
 def capturekeys():
@@ -42,16 +45,18 @@ def capturekeys():
         listener.join()
 
 def do_copy_existing():
-        global afterkeys
-        text = clipboard.paste()
-        capturekeys()
+    """copy paste buffer to trello"""
+    global AFTER_KEYS
+    text = clipboard.paste()
+    capturekeys()
 
-        aatlist.add_card(name = afterkeys, desc = text)
-        afterkeys = ""
+    aatlist.add_card(name = AFTER_KEYS, desc = text)
+    AFTER_KEYS = ""
 
 
 def do_copy():
-    global afterkeys
+    """copy selected in copy buffer and put it on trello, after restore buffer"""
+    global AFTER_KEYS
 
     backupclipb = clipboard.paste()
 
@@ -66,13 +71,14 @@ def do_copy():
 
     capturekeys()
 
-    aatlist.add_card(name = afterkeys, desc = text)
-    afterkeys = ""
+    aatlist.add_card(name = AFTER_KEYS, desc = text)
+    AFTER_KEYS = ""
     clipboard.copy(backupclipb)
 
 
 def do_paste():
-    global afterkeys
+    """get text fro  trello and put it in copy buffer, after that paste it"""
+    global AFTER_KEYS
 
     thecard = None
     capturekeys()
@@ -81,7 +87,7 @@ def do_paste():
         if card.created_date > newdate:
             card.delete()
 
-        if card.name == afterkeys:
+        if card.name == AFTER_KEYS:
             thecard = card
 
     if thecard:
@@ -94,7 +100,7 @@ def do_paste():
         keyboardcontroller.release("v")
 
         clipboard.copy(backupclipb)
-        afterkeys = ""
+        AFTER_KEYS = ""
 
 
 with keyboard.GlobalHotKeys({
