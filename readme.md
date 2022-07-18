@@ -7,13 +7,17 @@ First Crtl+Alt+c and input the name under which you want to save your copy, and 
 
 After that Ctrl+Alt+v and input the name of your copy and press Enter to paste from trello.
 
+You do not have to be in the term where you started the program, you can copy paste from any window.
+
 # 2 Structure
 
 No structure with maps, so nothing here
 
 # 3.5 Things used
 
-Empty
+Here is as good a place as any:
+https://pypi.org/project/pyperclip/
+also counts for the [clipboard](https://pypi.org/project/clipboard/) package
 
 # 3 How to run it
 
