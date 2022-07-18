@@ -3,7 +3,7 @@
 A python service (linux only for now) that allows you to copy to a trello list and to paste from a trello list.
 
 With only 2 shortcuts (Crtl+Alt+c and Ctrl+Alt+v)
-First Crtl+Alt+c nd input the name under which you want to save your copy, and press Enter to copy to trello.
+First Crtl+Alt+c and input the name under which you want to save your copy, and press Enter to copy to trello.
 
 After that Ctrl+Alt+v and input the name of your copy and press Enter to paste from trello.
 
