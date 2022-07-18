@@ -19,13 +19,19 @@ Empty
 
 This software depends on `pipenv` how one does `pipenv` one can find here: [pipenv](https://docs.python-guide.org/dev/virtualenvs/)
 
-Get your trello api key and secret and put those in the secrtes.py
+Get your trello api key and secret and put those in the secrets.py
+
+API_KEY = 'your api key'
+API_SECRET = 'your api secret'
 
 make a new bord on trello (or use one you already have)
 make a list on your trello board (or use one you already have)
 get the ids of the bord and the list [how?](https://community.atlassian.com/t5/Trello-questions/How-to-get-Trello-Board-ID/qaq-p/1347525)
 
 put the ids also in the secrets.py
+
+BOARD_ID = 'id of your board'
+LIST_ID = 'id of your list'
 
 after all that you can run ./shortcuts.py (not a service jet, but a good test)
 
