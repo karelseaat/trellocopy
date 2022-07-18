@@ -4,10 +4,10 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/aat/trellocopy/shortcuts.py
-WorkingDirectory=/home/aat/trellocopy
-User=aat
-Group=aat
+ExecStart=/home/yourusername/trellocopy/shortcuts.py
+WorkingDirectory=/home/yourusername/trellocopy
+User=yourusername
+Group=yourusername
 Restart=on-failure
 SyslogIdentifier=trellocopy
 RestartSec=5
